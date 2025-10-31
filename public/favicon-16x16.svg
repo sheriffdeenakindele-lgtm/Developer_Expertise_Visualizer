@@ -1,0 +1,17 @@
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="8" cy="8" r="7.5" fill="#2563eb" stroke="#1d4ed8" stroke-width="1"/>
+  
+  <!-- Code brackets -->
+  <path d="M4 5L2.5 6.5L4 8" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M12 5L13.5 6.5L12 8" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Forward slash -->
+  <path d="M9.5 4L6.5 9" stroke="white" stroke-width="1" stroke-linecap="round"/>
+  
+  <!-- Chart bar elements -->
+  <rect x="5" y="10" width="1" height="3" fill="white" rx="0.5"/>
+  <rect x="7" y="9" width="1" height="4" fill="white" rx="0.5"/>
+  <rect x="9" y="11" width="1" height="2" fill="white" rx="0.5"/>
+  <rect x="11" y="8" width="1" height="5" fill="white" rx="0.5"/>
+</svg>

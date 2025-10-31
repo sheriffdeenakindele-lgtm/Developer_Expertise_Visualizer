@@ -11,18 +11,55 @@ export default function ParticleBackground() {
     <Particles
       id="tsparticles"
       init={particlesInit}
-      className="absolute inset-0 -z-10"
+      className="fixed inset-0 w-full h-full z-0"
       options={{
-        fullScreen: { enable: false },
+        fullScreen: { enable: true, zIndex: 0 },
         background: { color: { value: "transparent" } },
         particles: {
-          number: { value: 80 },
+          number: { value: 100 },
           color: { value: "#6366f1" },
-          links: { enable: true, color: "#a78bfa", distance: 150 },
-          move: { enable: true, speed: 1 },
-          opacity: { value: 0.5 },
-          size: { value: 2 },
+          links: { 
+            enable: true, 
+            color: "#a78bfa", 
+            distance: 150,
+            opacity: 0.4
+          },
+          move: { 
+            enable: true, 
+            speed: 1,
+            direction: "none",
+            random: false,
+            straight: false,
+            outModes: {
+              default: "bounce"
+            }
+          },
+          opacity: { value: 0.3 },
+          size: { value: 3 },
+          shape: {
+            type: "circle"
+          }
         },
+        interactivity: {
+          events: {
+            onHover: {
+              enable: true,
+              mode: "repulse"
+            },
+            onClick: {
+              enable: true,
+              mode: "push"
+            }
+          },
+          modes: {
+            repulse: {
+              distance: 100
+            },
+            push: {
+              quantity: 4
+            }
+          }
+        }
       }}
     />
   );
