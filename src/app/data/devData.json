@@ -1,0 +1,42 @@
+[
+  {
+    "developer": "Dan Abramov",
+    "commits": 150,
+    "areas": ["Core", "Hooks", "State Management"]
+  },
+  {
+    "developer": "Andrew Clark",
+    "commits": 120,
+    "areas": ["React DOM", "Testing"]
+  },
+  {
+    "developer": "Sebastian Markbåge",
+    "commits": 90,
+    "areas": ["Scheduler", "Performance"]
+  },
+  {
+    "developer": "Rachel Nabors",
+    "commits": 75,
+    "areas": ["Documentation", "Community", "Learning"]
+  },
+  {
+    "developer": "Brian Vaughn",
+    "commits": 130,
+    "areas": ["DevTools", "Profiler", "React UI Debugging"]
+  },
+  {
+    "developer": "Sophie Alpert",
+    "commits": 110,
+    "areas": ["Infrastructure", "Build System", "Releases"]
+  },
+  {
+    "developer": "Paul O'Shannessy",
+    "commits": 80,
+    "areas": ["Testing", "Build", "Code Review"]
+  },
+  {
+    "developer": "Eli White",
+    "commits": 65,
+    "areas": ["Accessibility", "UI Components", "Frontend"]
+  }
+]
