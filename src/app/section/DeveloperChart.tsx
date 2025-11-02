@@ -1,6 +1,8 @@
 // Enable client-side rendering for interactive chart components
 "use client";
 
+// Import React hooks for state management
+import { useState, useEffect } from "react";
 // Import chart components from Recharts library for data visualization
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 
@@ -22,16 +24,44 @@ interface DeveloperChartProps {
 // Main component function that renders the developer contribution chart
 export default function DeveloperChart({ data }: DeveloperChartProps) {
   
+  // State to track if we're on mobile screen
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Effect to detect screen size changes
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth < 640); // Tailwind's sm breakpoint
+    };
+
+    // Check on mount
+    checkScreenSize();
+
+    // Add resize listener
+    window.addEventListener('resize', checkScreenSize);
+
+    // Cleanup
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
+
   // Function to format long developer names for better display on mobile/small screens
   const formatDeveloperName = (name: string) => {
     const parts = name.split(' '); // Split name by spaces
     if (parts.length === 1) return name; // Return as-is if single word
     
-    // For names longer than 10 characters, abbreviate to "FirstName L."
-    if (name.length > 10) {
+    // For mobile screens, be more aggressive with name shortening
+    if (isMobile && name.length > 8) {
+      // Create initials for very long names on mobile
       return `${parts[0]} ${parts[parts.length - 1][0]}.`;
     }
     return name; // Return full name if short enough
+  };
+
+  // Function to check if we're on a mobile device (for more aggressive formatting if needed)
+  const isMobileView = () => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth < 640; // Tailwind's 'sm' breakpoint
+    }
+    return false;
   };
 
   // Transform the original data to include formatted display names while preserving originals
@@ -74,55 +104,55 @@ export default function DeveloperChart({ data }: DeveloperChartProps) {
       </div>
       
       {/* Chart container with glassmorphism effect and responsive padding */}
-      <div className="bg-white/90 backdrop-blur-sm p-2 sm:p-4 lg:p-6 xl:p-8 rounded-2xl shadow-lg overflow-hidden">
+      <div className="bg-white/90 backdrop-blur-sm p-4 sm:p-6 lg:p-8 rounded-2xl shadow-lg overflow-hidden">
       
       {/* Responsive container that adapts chart size to screen dimensions */}
-      <ResponsiveContainer width="100%" height={250} className="sm:!h-80 md:!h-96 lg:!h-[400px]">
+      <ResponsiveContainer width="100%" height={isMobile ? 300 : 400} className="md:!h-[450px] lg:!h-[500px]">
         
         {/* Main bar chart component with responsive configuration */}
         <BarChart 
           data={chartData}  // Use transformed data with display names
           margin={{ 
-            top: 10,    // Minimal top margin for mobile
-            right: 5,   // Tight right margin to maximize chart width
-            left: 5,    // Tight left margin to maximize chart width
-            bottom: 60  // Extra bottom margin for rotated labels
+            top: 20,     // Good top margin
+            right: isMobile ? 15 : 30,   // Less margin on mobile
+            left: isMobile ? 15 : 20,    // Less margin on mobile
+            bottom: isMobile ? 80 : 60   // More space for rotated labels on mobile
           }}
           className="w-full" // Ensure chart fills container width
         >
           
-          {/* X-axis configuration for developer names */}
+          {/* X-axis configuration for developer names with responsive settings */}
           <XAxis 
             dataKey="displayName"  // Use formatted names for display
             stroke="#374151"       // Dark gray color for axis
-            angle={-45}            // Rotate labels 45 degrees for mobile readability
-            textAnchor="end"       // Align rotated text to end for better positioning
-            height={60}            // Reserve space for rotated labels
-            interval={0}           // Show all labels (don't skip any)
-            fontSize={8}           // Small font size for mobile
-            fontWeight="400"       // Normal font weight
+            angle={isMobile ? -45 : 0}              // Rotate only on mobile
+            textAnchor={isMobile ? "end" : "middle"}    // Different alignment for mobile/desktop
+            height={isMobile ? 80 : 60}            // More space on mobile for rotated labels
+            interval={0}           // Show all labels
+            fontSize={isMobile ? 10 : 12}          // Smaller font on mobile
+            fontWeight="500"       // Medium font weight
             tick={{ 
-              fill: '#374151',     // Text color matching axis
-              fontSize: 8,         // Consistent small font size
-              textAnchor: 'end'    // Text alignment for rotated labels
+              fill: '#374151',     
+              fontSize: isMobile ? 10 : 12,        
+              textAnchor: isMobile ? 'end' : 'middle',
+              fontWeight: '500'    
             }}
-            className="sm:!text-xs md:!text-sm" // Responsive font sizing
-            axisLine={false}       // Remove axis line for cleaner look
-            tickLine={false}       // Remove tick marks for cleaner look
+            axisLine={false}       
+            tickLine={false}       
           />
           
           {/* Y-axis configuration for commit counts */}
           <YAxis 
-            stroke="#374151"       // Consistent color with X-axis
-            fontSize={8}           // Small font for mobile
+            stroke="#374151"       
+            fontSize={12}          
             tick={{ 
-              fill: '#374151',     // Text color matching axis
-              fontSize: 8          // Consistent small font size
+              fill: '#374151',     
+              fontSize: 12,        
+              fontWeight: '500'    
             }}
-            className="sm:!text-xs md:!text-sm" // Responsive font sizing
-            axisLine={false}       // Remove axis line for cleaner look
-            tickLine={false}       // Remove tick marks for cleaner look
-            width={30}             // Narrow width to maximize chart area
+            axisLine={false}       
+            tickLine={false}       
+            width={40}             
           />
           
           {/* Interactive tooltip that shows detailed info on hover */}
@@ -130,11 +160,11 @@ export default function DeveloperChart({ data }: DeveloperChartProps) {
           
           {/* Bar chart elements representing commit data */}
           <Bar 
-            dataKey="commits"      // Data field to visualize (commit counts)
-            fill="#2563eb"         // Blue fill color for bars
-            radius={[4, 4, 0, 0]}  // Rounded top corners for modern look
-            stroke="#1d4ed8"       // Slightly darker blue border
-            strokeWidth={1}        // Thin border width
+            dataKey="commits"      
+            fill="#2563eb"         
+            radius={[4, 4, 0, 0]}  
+            stroke="#1d4ed8"       
+            strokeWidth={1}        
           />
         </BarChart>
       </ResponsiveContainer>

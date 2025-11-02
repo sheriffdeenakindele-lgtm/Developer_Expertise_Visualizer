@@ -8,7 +8,7 @@ const Header = () => {
       <div className="max-w-screen-xl mx-auto px-2 sm:px-4">
         <div className="flex items-center justify-between py-2 sm:py-4">
           <div className="flex-1 min-w-0">
-            <h1 className="text-sm sm:text-lg lg:text-2xl font-bold text-gray-800 truncate">Developer Expertise Visualizer</h1>
+            <h1 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-gray-800 leading-tight">Developer Expertise Visualizer</h1>
           </div>
           <div className="flex-1 flex justify-end">
             <nav className="flex space-x-1 sm:space-x-2 lg:space-x-4">

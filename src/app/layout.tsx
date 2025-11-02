@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "./components/Header";
 import React from "react";
 import ParticleBackground from "./components/ParticleBackground";
+import Footer from "./components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -86,6 +87,7 @@ export default function RootLayout({
         <div className="relative z-10">
           <Header />
           {children}
+          <Footer />
         </div>
       </body>
     </html>
